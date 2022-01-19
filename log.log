@@ -1,0 +1,35 @@
+2022-01-18 18:35:31 ===> stdClass Object
+(
+    [civilite] => M
+    [nom] => MILLOT
+    [prenom] => Manon
+    [email] => manon2000.millot@gmail.com
+    [statut] => 0
+)
+
+2022-01-18 18:35:31 ===> M MILLOT Manon manon2000.millot@gmail.com 0 
+2022-01-18 18:35:31 =====> Test
+2022-01-18 18:38:54 => 48
+2022-01-18 18:39:10 ===> stdClass Object
+(
+    [civilite] => M
+    [nom] => NIDDAM
+    [prenom] => Alexandre
+    [email] => alexniddam@gmail.com
+    [statut] => 0
+)
+
+2022-01-18 18:39:10 ===> M NIDDAM Alexandre alexniddam@gmail.com 0 
+2022-01-18 18:39:10 =====> Test
+2022-01-18 18:41:45 ===> stdClass Object
+(
+    [civilite] => M
+    [nom] => TEST
+    [prenom] => Test
+    [email] => test@gmail.com
+    [statut] => 2
+)
+
+2022-01-18 18:41:45 ===> M TEST Test test@gmail.com 2 
+2022-01-18 18:41:45 =====> Test
+2022-01-18 18:42:01 => 50
