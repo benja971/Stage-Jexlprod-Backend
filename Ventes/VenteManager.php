@@ -19,10 +19,10 @@ class VenteManager
         $req->execute();
     }
 
-    public function getList()
+    public function getList($annee)
     {
         $ventes = [];
-        $req = $this->db->query('SELECT * FROM ventes');
+        $req = $this->db->query('SELECT * FROM ventes WHERE date LIKE "' . $annee . '-%"');
         while ($vente = $req->fetch(PDO::FETCH_ASSOC)) {
             $ventes[] = [
                 'id' => $vente['id'],
