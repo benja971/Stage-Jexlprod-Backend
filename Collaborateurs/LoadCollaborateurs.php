@@ -14,11 +14,6 @@ $data = json_decode($json, true);
 
 if (isset($data)) {
 
-    file_put_contents(
-        '../log.log',
-        'POST: ' . $data["annee"] . PHP_EOL,
-        FILE_APPEND
-    );
     $db = new PDO("mysql:host=localhost; dbname=stage_jexlprod; charset=utf8", "root", "root");
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
