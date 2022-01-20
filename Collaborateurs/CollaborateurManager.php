@@ -25,11 +25,11 @@ class CollaborateurManager
         $req->execute();
     }
 
-    public function delete($id)
+    public function delete($id, $annee)
     {
         $this->db->exec('UPDATE collaborateurs SET actif = 0 WHERE id = ' . $id);
 
-        echo json_encode($this->getList());
+        echo json_encode($this->getList($annee));
     }
 
     public function get($id)
@@ -47,10 +47,12 @@ class CollaborateurManager
         ];
     }
 
-    public function getList()
+    public function getList($annee)
     {
+
         $collaborateurs = [];
-        $req = $this->db->query('SELECT * FROM collaborateurs WHERE actif = 1 ORDER BY nom');
+        $req = $this->db->query('SELECT collaborateurs.*, SUM(ventes.prix) as volume FROM collaborateurs join ventes on collaborateurs.id = ventes.collaborateur WHERE actif = 1 and ventes.date like "' . $annee . '-%"GROUP BY collaborateurs.id ORDER BY collaborateurs.nom');
+
         while ($donnees = $req->fetch(PDO::FETCH_ASSOC)) {
             $collaborateurs[] =
                 [
@@ -60,6 +62,7 @@ class CollaborateurManager
                     'prenom' => $donnees['prenom'],
                     'statut' => $donnees['statut'],
                     'email' => $donnees['email'],
+                    'volume' => $donnees['volume'],
                 ];
         }
         return $collaborateurs;
