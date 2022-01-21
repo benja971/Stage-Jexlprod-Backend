@@ -1,11 +1,14 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 
-$bd = new PDO('mysql:host=localhost;dbname=stage_jexlprod', 'root', 'root');
-$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$ini = parse_ini_file('../config.ini');
 
-$req = $bd->prepare('SELECT DISTINCT YEAR(date) AS annee FROM ventes ORDER BY annee DESC');
+$db = new PDO($ini['DB_URL'], $ini['DB_USER'], $ini['DB_PASSWORD']);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$req = $db->prepare('SELECT DISTINCT YEAR(ventes.date) AS annee FROM ventes join collaborateurs on ventes.collaborateur = collaborateurs.id where collaborateurs.actif = 1 ORDER BY annee DESC  ');
 $req->execute();
 
 $years = [];

@@ -9,14 +9,29 @@ require "./VenteManager.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (isset($data)) {
+file_put_contents(
+    '../log.log',
+    date('Y-m-d H:i:s') . ' - ' . print_r($data, true) . PHP_EOL . " \n",
+    FILE_IGNORE_NEW_LINES
+);
 
-    file_put_contents("../log.log", print_r($data, true));
+if (isset($data->annee)) {
 
-    $db = new PDO('mysql:host=localhost;dbname=stage_jexlprod;charset=utf8', 'root', 'root');
+
+    $ini = parse_ini_file('../config.ini');
+
+    $db = new PDO($ini['DB_URL'], $ini['DB_USER'], $ini['DB_PASSWORD']);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $manager = new VenteManager($db);
 
-    echo $manager->getList($data->annee);
+
+    $ventes = $manager->getList($data->annee);
+    // file_put_contents(
+    //     '../log.log',
+    //     date('Y-m-d H:i:s') . ' - ' . "test" . PHP_EOL . " \n",
+    //     FILE_APPEND
+    // );
+
+    echo $ventes;
 }

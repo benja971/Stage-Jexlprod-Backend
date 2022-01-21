@@ -11,7 +11,9 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 
 if (isset($data)) {
-    $db = new PDO("mysql:host=localhost; dbname=stage_jexlprod; charset=utf8", "root", "root");
+    $ini = parse_ini_file('../config.ini');
+
+    $db = new PDO($ini['DB_URL'], $ini['DB_USER'], $ini['DB_PASSWORD']);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $manager = new CollaborateurManager($db);

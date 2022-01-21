@@ -51,7 +51,7 @@ class CollaborateurManager
     {
 
         $collaborateurs = [];
-        $req = $this->db->query('SELECT collaborateurs.*, SUM(ventes.prix) as volume FROM collaborateurs join ventes on collaborateurs.id = ventes.collaborateur WHERE actif = 1 and ventes.date like "' . $annee . '-%" GROUP BY collaborateurs.id ORDER BY collaborateurs.nom');
+        $req = $this->db->query('SELECT collaborateurs.*, SUM(ventes.prix) as volume FROM collaborateurs join ventes on collaborateurs.id = ventes.collaborateur WHERE collaborateurs.actif = 1 and ventes.date like "' . $annee . '-%" GROUP BY collaborateurs.id ORDER BY collaborateurs.nom');
 
         while ($donnees = $req->fetch(PDO::FETCH_ASSOC)) {
             $collaborateurs[] =
