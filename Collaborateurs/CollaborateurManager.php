@@ -65,7 +65,7 @@ class CollaborateurManager
                     'volume' => $donnees['volume'],
                 ];
         }
-        return $collaborateurs;
+        return json_encode($collaborateurs);
     }
 
     public function update(Collaborateur $collaborateur)

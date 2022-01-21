@@ -9,11 +9,7 @@ require "./VenteManager.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-file_put_contents(
-    '../log.log',
-    date('Y-m-d H:i:s') . ' - ' . print_r($data, true) . PHP_EOL . " \n",
-    FILE_IGNORE_NEW_LINES
-);
+
 
 if (isset($data->annee)) {
 

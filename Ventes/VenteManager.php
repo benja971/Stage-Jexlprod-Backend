@@ -21,7 +21,7 @@ class VenteManager
 
     public function getList($annee)
     {
-        $sql = "SELECT CONCAT(collaborateurs.nom," . "' '" . ", collaborateurs.prenom) as collab, ventes.* FROM ventes JOIN collaborateurs ON ventes.collaborateur = collaborateurs.id WHERE ventes.actif = 1 AND ventes.date LIKE '" . $annee . "-%' ORDER BY date DESC;";
+        $sql = "SELECT CONCAT(collaborateurs.nom," . "' '" . ", collaborateurs.prenom) as collab, ventes.* FROM ventes JOIN collaborateurs ON ventes.collaborateur = collaborateurs.id WHERE ventes.actif = 1 AND ventes.date LIKE '" . $annee . "-%' ORDER BY ventes.date DESC;";
 
         file_put_contents('../.log', $sql . "\n\n", FILE_APPEND);
 

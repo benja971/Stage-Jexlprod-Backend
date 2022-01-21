@@ -30,13 +30,5 @@ if (isset($data)) {
         ]
     );
 
-
-    file_put_contents(
-        "../log.log",
-        date("Y-m-d H:i:s") . " ===> " . $collaborateur->__toString() . "\n",
-        FILE_APPEND
-    );
-
-
     $manager->add($collaborateur);
 }
