@@ -19,11 +19,9 @@ class VenteManager
         $req->execute();
     }
 
-    public function getList($annee)
+    public function getList($annee, $id_collab)
     {
-        $sql = "SELECT CONCAT(collaborateurs.nom," . "' '" . ", collaborateurs.prenom) as collab, ventes.* FROM ventes JOIN collaborateurs ON ventes.collaborateur = collaborateurs.id WHERE ventes.actif = 1 AND ventes.date LIKE '" . $annee . "-%' ORDER BY ventes.date DESC;";
-
-        file_put_contents('../.log', $sql . "\n\n", FILE_APPEND);
+        $sql = "SELECT CONCAT(collaborateurs.nom," . "' '" . ", collaborateurs.prenom) as collab, ventes.* FROM ventes JOIN collaborateurs ON ventes.collaborateur = collaborateurs.id WHERE collaborateurs.id = " . $id_collab . " and ventes.actif = 1 AND ventes.date LIKE '" . $annee . "-%' ORDER BY ventes.date DESC;";
 
         $req = $this->db->prepare($sql);
         $req->execute();
@@ -43,6 +41,7 @@ class VenteManager
             ];
         }
 
+
         return json_encode($ventes);
     }
 
@@ -61,14 +60,8 @@ class VenteManager
     }
 
 
-    public function delete($id, $annee)
+    public function delete($id_vente)
     {
-        $this->db->exec('UPDATE ventes SET actif = 0 WHERE id = ' . $id);
-
-        $ventes = $this->getList($annee);
-
-        file_put_contents('../.log', print_r($ventes, true) . "\n\n", FILE_IGNORE_NEW_LINES);
-
-        return $ventes;
+        $this->db->exec('UPDATE ventes SET actif = 0 WHERE id = ' . $id_vente);
     }
 }

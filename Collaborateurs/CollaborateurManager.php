@@ -25,11 +25,21 @@ class CollaborateurManager
         $req->execute();
     }
 
-    public function delete($id, $annee)
+    public function delete($id)
     {
+        file_put_contents(
+            "../.log",
+            "UPDATE collaborateurs SET actif = 0 WHERE id = ' . $id . '" . PHP_EOL,
+            FILE_APPEND
+        );
+
         $this->db->exec('UPDATE collaborateurs SET actif = 0 WHERE id = ' . $id);
 
-        echo json_encode($this->getList($annee));
+        file_put_contents(
+            "../.log",
+            "UPDATE collaborateurs SET actif = 0 WHERE id = ' . $id . '" . PHP_EOL,
+            FILE_APPEND
+        );
     }
 
     public function get($id)

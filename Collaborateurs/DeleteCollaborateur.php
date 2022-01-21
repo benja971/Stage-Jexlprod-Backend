@@ -18,5 +18,5 @@ if (isset($data)) {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $manager = new CollaborateurManager($db);
 
-    $manager->delete($data->id, $data->annee);
+    $manager->delete($data->id);
 }

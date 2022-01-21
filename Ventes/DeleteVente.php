@@ -10,7 +10,8 @@ require "VenteManager.php";
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-if (isset($data->id) && isset($data->annee)) {
+if (isset($data->id_vente)) {
+
 
     $ini = parse_ini_file('../config.ini');
 
@@ -19,5 +20,5 @@ if (isset($data->id) && isset($data->annee)) {
 
     $manager = new VenteManager($db);
 
-    echo $manager->delete($data->id, $data->annee);
+    echo $manager->delete($data->id_vente);
 }
