@@ -9,7 +9,7 @@ require "./VenteManager.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (isset($data->annee)) {
+if (isset($data->annee) && isset($data->id_collaborateur)) {
 
     $ini = parse_ini_file('../config.ini');
 
@@ -18,7 +18,7 @@ if (isset($data->annee)) {
 
     $manager = new VenteManager($db);
 
-    $ventes = $manager->getList($data->annee, $data->id);
+    $ventes = $manager->getList($data->annee, $data->id_collaborateur);
 
     echo $ventes;
 }
