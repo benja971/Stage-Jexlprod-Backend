@@ -62,11 +62,11 @@ class CollaborateurManager
 
         $collaborateurs = [];
 
-        $sql = "select collaborateurs.*, sum(ventes.prix) as volume from collaborateurs join (select * from ventes where actif = 1) as ventes on collaborateurs.id = ventes.collaborateur where ventes.actif = 1 and ventes.date like '$annee%' group by collaborateurs.nom order by collaborateurs.nom";
+        $sql = 'SELECT collaborateursActif.*, sum(ventesActif.prix) as volume from (select * from collaborateurs where actif = 1) as collaborateursActif join (select * from ventes where actif = 1) as ventesActif on collaborateursActif.id = ventesActif.collaborateur where ventesActif.date like "' . $annee . '%" group by collaborateursActif.nom order by collaborateursActif.nom';
 
         file_put_contents(
             "../.log",
-            $sql . PHP_EOL,
+            sprintf($sql, $annee) . PHP_EOL,
             FILE_APPEND
         );
 

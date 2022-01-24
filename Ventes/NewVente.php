@@ -33,11 +33,5 @@ if (isset($data)) {
 
     $vente->__toString();
 
-    file_put_contents(
-        '../log.log',
-        date('Y-m-d H:i:s') . ' ==> ' . $vente->__toString() . "\n",
-        FILE_APPEND
-    );
-
     $manager->add($vente);
 }

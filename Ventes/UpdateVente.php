@@ -27,12 +27,6 @@ if (isset($data["id"]) && isset($data["adresse"]) && isset($data["ville"]) && is
         "collaborateur" => $data["collaborateur"],
     ]);
 
-    file_put_contents(
-        '../log.log',
-        $vente->getId() . ' ' . $vente->getLibele() . ' ' . $vente->getVille() . ' ' . $vente->getCode_postal() . ' ' . $vente->getDate() . ' ' . $vente->getPrix() . ' ' . $vente->getCollaborateur() . "\n",
-        FILE_APPEND
-    );
-
     $venteManager = new VenteManager($db);
 
     $venteManager->update($vente);

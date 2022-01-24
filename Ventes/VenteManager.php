@@ -23,9 +23,6 @@ class VenteManager
     {
         $sql = 'SELECT CONCAT(collaborateurs.nom,' . "' '" . ', collaborateurs.prenom) as collab, ventes.* FROM ventes JOIN collaborateurs ON ventes.collaborateur = collaborateurs.id WHERE collaborateurs.id = ' . $id_collab . ' AND ventes.actif = 1 AND ventes.date LIKE "' . $annee . '-%" ORDER BY ventes.date DESC;';
 
-        file_put_contents('../.log', $sql . PHP_EOL, FILE_APPEND);
-
-
         $req = $this->db->prepare($sql);
         $req->execute();
 
@@ -66,12 +63,5 @@ class VenteManager
     public function delete($id_vente)
     {
         $this->db->exec('UPDATE ventes SET actif = 0 WHERE id = ' . $id_vente);
-
-        file_put_contents(
-            '../.log',
-            date('d/m/Y H:i:s') . ' - ' .
-                'UPDATE ventes SET actif = 0 WHERE id = ' . $id_vente . "\n",
-            FILE_APPEND
-        );
     }
 }
