@@ -35,7 +35,8 @@ class VenteManager
                 'ville' => $vente['ville'],
                 'code_postal' => $vente['code_postal'],
                 'date' => $vente['date'],
-                'prix' => $vente['prix'],
+                'commission_ht' => $vente['commission_ht'],
+                'commission_ttc' => $vente['commission_ttc'],
                 'collaborateur' => $vente['collaborateur'],
                 'collab' => $vente['collab']
             ];

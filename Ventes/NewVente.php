@@ -26,12 +26,11 @@ if (isset($data)) {
             "ville" => $data->ville,
             "code_postal" => $data->code_postal,
             "date" => $data->date,
-            "prix" => $data->prix,
+            "commission_ht" => $data->prix,
+            "commission_ttc" => $data->prix * 0.8,
             "collaborateur" => $data->collaborateur,
         ]
     );
-
-    $vente->__toString();
 
     $manager->add($vente);
 }
