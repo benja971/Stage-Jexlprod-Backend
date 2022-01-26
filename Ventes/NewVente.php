@@ -2,13 +2,19 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
-header('Content-Type: application/json');
+header('Content-Type: application/json, charset=utf-8');
 
 require "./Vente.php";
 require "./VenteManager.php";
 
 $json = file_get_contents('php://input');
 $data = json_decode($json);
+
+file_put_contents(
+    "../.log",
+    print_r($data, true),
+    FILE_APPEND
+);
 
 
 if (isset($data)) {

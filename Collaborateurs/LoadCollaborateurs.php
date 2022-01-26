@@ -3,6 +3,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Content-Type: application/json; charset=UTF-8");
+header("Charset: UTF-8");
 
 
 require "Collaborateur.php";
@@ -14,7 +15,7 @@ $data = json_decode($json, true);
 file_put_contents(
     "../.log",
     // sprintf($sql, $annee) . PHP_EOL,
-    print_r($json, true) . PHP_EOL,
+    print_r($data, true) . PHP_EOL,
     FILE_APPEND
 );
 

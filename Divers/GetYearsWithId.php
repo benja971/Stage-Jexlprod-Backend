@@ -14,13 +14,7 @@ if (isset($data['id'])) {
     $db = new PDO($ini['DB_URL'], $ini['DB_USER'], $ini['DB_PASSWORD']);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $req = $db->prepare('SELECT DISTINCT YEAR(ventes.date) AS annee FROM ventes join collaborateurs on ventes.collaborateur = collaborateurs.id where ventes.collaborateur = ' . $data["id"] . '  and collaborateurs.actif = 1 ORDER BY annee DESC  ');
-
-    file_put_contents(
-        "../.log",
-        date("Y-m-d H:i:s") . " - " . $data["id"] . " - " . $req->queryString . "\n\n",
-        FILE_APPEND
-    );
+    $req = $db->prepare('SELECT DISTINCT YEAR(ventes.date) AS annee FROM ventes join collaborateurs on ventes.collaborateur = collaborateurs.id_collaborateur where ventes.collaborateur = ' . $data["id"] . '  and collaborateurs.actif = 1 ORDER BY annee DESC  ');
 
     $years = [];
 
@@ -28,6 +22,11 @@ if (isset($data['id'])) {
 
     foreach ($req->fetchAll(PDO::FETCH_ASSOC) as $annee) {
         $years[] = $annee['annee'];
+    }
+
+    if (count($years) === 0) {
+        $date = new DateTime("NOW");
+        $years[] = $date->format('Y');
     }
 
     echo json_encode($years);

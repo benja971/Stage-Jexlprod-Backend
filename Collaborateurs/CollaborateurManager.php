@@ -2,6 +2,7 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
+header("Charset: UTF-8");
 
 class CollaborateurManager
 {
@@ -27,7 +28,7 @@ class CollaborateurManager
 
     public function delete($id)
     {
-        $this->db->exec('UPDATE collaborateurs SET actif = 0 WHERE id = ' . $id);
+        $this->db->exec('UPDATE collaborateurs SET actif = 0 WHERE id_collaborateur = ' . $id);
     }
 
     public function getList($annee)
@@ -44,9 +45,9 @@ class CollaborateurManager
                 FROM
                     ventes
                 WHERE
-                    actif = 1) Y ON X.id = Y.collaborateur
+                    actif = 1) Y ON X.id_collaborateur = Y.collaborateur
                 GROUP BY
-                    X.id
+                    X.id_collaborateur
                 ORDER BY
                     X.nom';
 
@@ -57,7 +58,7 @@ class CollaborateurManager
         while ($donnees = $req->fetch(PDO::FETCH_ASSOC)) {
             $collaborateurs[] =
                 [
-                    'id' => $donnees['id'],
+                    'id_collaborateur' => $donnees['id_collaborateur'],
                     'civilite' => $donnees['civilite'],
                     'nom' => $donnees['nom'],
                     'prenom' => $donnees['prenom'],

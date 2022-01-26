@@ -7,7 +7,8 @@ class Vente
     private $ville;
     private $code_postal;
     private $date;
-    private $prix;
+    private $commission_ht;
+    private $commission_ttc;
     private $collaborateur;
 
     public function __construct(array $donnees)
@@ -106,22 +107,6 @@ class Vente
     }
 
     /**
-     * Get the value of prix
-     */
-    public function getPrix()
-    {
-        return $this->prix;
-    }
-
-    /**
-     * Set the value of prix
-     */
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
-    }
-
-    /**
      * Get the value of collaborateur
      */
     public function getCollaborateur()
@@ -137,8 +122,35 @@ class Vente
         $this->collaborateur = $collaborateur;
     }
 
-    public function __toString()
+    /**
+     * Get the value of commission_ht
+     */
+    public function getCommission_ht()
     {
-        return $this->libele . " " . $this->ville . " " . $this->code_postal . " " . $this->date . " " . $this->prix . " " . $this->collaborateur;
+        return $this->commission_ht;
+    }
+
+    /**
+     * Set the value of commission_ht
+     */
+    public function setCommission_ht($commission_ht)
+    {
+        $this->commission_ht = $commission_ht;
+    }
+
+    /**
+     * Get the value of commission_ttc
+     */
+    public function getCommission_ttc()
+    {
+        return $this->commission_ttc;
+    }
+
+    /**
+     * Set the value of commission_ttc
+     */
+    public function setCommission_ttc($commission_ttc)
+    {
+        $this->commission_ttc = $commission_ttc;
     }
 }
