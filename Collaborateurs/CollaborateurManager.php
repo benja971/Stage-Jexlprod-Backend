@@ -1,5 +1,7 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Charset: UTF-8");
@@ -45,6 +47,7 @@ class CollaborateurManager
                 FROM
                     ventes
                 WHERE
+                    date LIKE "' . $annee . '-%" AND
                     actif = 1) Y ON X.id_collaborateur = Y.collaborateur
                 GROUP BY
                     X.id_collaborateur

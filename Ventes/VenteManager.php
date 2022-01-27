@@ -10,7 +10,7 @@ class VenteManager
     public function add(Vente $vente)
     {
         $sql = sprintf(
-            "INSERT INTO ventes (adresse, ville, code_postal, commission_ht, commission_ttc, date, collaborateur) VALUES ('%s', '%s', '%s', %f, %f, '%s', %d)\n\n",
+            'INSERT INTO `ventes` (`adresse`, `ville`, `code_postal`, `commission_ht`, `commission_ttc`, `date`, `collaborateur`) VALUES ("%s", "%s", "%s", %f, %f, "%s", %d)',
             $vente->getLibele(),
             $vente->getVille(),
             $vente->getCode_postal(),
@@ -19,14 +19,19 @@ class VenteManager
             $vente->getDate(),
             $vente->getCollaborateur()
         );
-        $req = $this->db->prepare($sql);
-        $req->bindValue(':collaborateur', $vente->getCollaborateur());
 
-        file_put_contents(
-            "../.log",
-            print_r($vente, true),
-            FILE_APPEND
-        );
+        $req = $this->db->prepare($sql);
+
+        file_put_contents('../.log', sprintf(
+            'INSERT INTO `ventes` (`adresse`, `ville`, `code_postal`, `commission_ht`, `commission_ttc`, `date`, `collaborateur`) VALUES ("%s", "%s", "%s", %f, %f, "%s", %d)',
+            $vente->getLibele(),
+            $vente->getVille(),
+            $vente->getCode_postal(),
+            $vente->getCommission_ht(),
+            $vente->getCommission_ttc(),
+            $vente->getDate(),
+            $vente->getCollaborateur()
+        ), FILE_APPEND);
 
         $req->execute();
     }

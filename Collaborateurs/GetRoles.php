@@ -15,7 +15,7 @@ $roles = [];
 
 foreach ($stmt->fetchAll() as $row) {
     $roles[] = [
-        'id' => $row['id'],
+        'id' => $row['id_role'],
         'nom' => $row['nom']
     ];
 }

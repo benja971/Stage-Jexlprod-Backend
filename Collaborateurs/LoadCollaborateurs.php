@@ -12,12 +12,6 @@ require "CollaborateurManager.php";
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-file_put_contents(
-    "../.log",
-    // sprintf($sql, $annee) . PHP_EOL,
-    print_r($data, true) . PHP_EOL,
-    FILE_APPEND
-);
 
 if (isset($data["annee"])) {
     $ini = parse_ini_file('../config.ini');
