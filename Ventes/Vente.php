@@ -7,9 +7,10 @@ class Vente
     private $ville;
     private $code_postal;
     private $date;
+    private $collaborateur;
+    private $frais_agence;
     private $commission_ht;
     private $commission_ttc;
-    private $collaborateur;
 
     public function __construct(array $donnees)
     {
@@ -152,5 +153,21 @@ class Vente
     public function setCommission_ttc($commission_ttc)
     {
         $this->commission_ttc = $commission_ttc;
+    }
+
+    /**
+     * Get the value of frais_agence
+     */
+    public function getFrais_agence()
+    {
+        return $this->frais_agence;
+    }
+
+    /**
+     * Set the value of frais_agence
+     */
+    public function setFrais_agence($frais_agence)
+    {
+        $this->frais_agence = $frais_agence;
     }
 }
