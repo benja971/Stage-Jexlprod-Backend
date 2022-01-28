@@ -50,21 +50,19 @@ class VenteManager
 
     public function update($vente)
     {
+        $collaborateurManager = new CollaborateurManager($this->db);
+
         $sql = sprintf(
-            "UPDATE ventes SET adresse = '%s', ville = '%s', code_postal = '%s', date = '%s', frais_agence = %f, id_collaborateur = %d WHERE id_vente = %d",
+            "UPDATE ventes SET adresse = '%s', ville = '%s', code_postal = '%s', date = '%s', frais_agence = %f, id_collaborateur = %d, commission_ht = %f, commission_ttc = %f WHERE id_vente = %d",
             $vente->getLibele(),
             $vente->getVille(),
             $vente->getCode_postal(),
             $vente->getDate(),
             $vente->getFrais_agence(),
             $vente->getCollaborateur(),
-            $vente->getId()
-        );
-
-        file_put_contents(
-            "../.log",
-            $sql . "\n",
-            FILE_APPEND
+            $vente->getFrais_agence() * $collaborateurManager->get_palier($vente) / 100,
+            $vente->getFrais_agence() * 0.8 * $collaborateurManager->get_palier($vente) / 100,
+            $vente->getId(),
         );
 
         $req = $this->db->prepare($sql);
