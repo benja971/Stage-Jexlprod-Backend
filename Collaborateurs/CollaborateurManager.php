@@ -15,25 +15,22 @@ class CollaborateurManager
 
     private function getTotalCommission($id_collab, $annee)
     {
-        file_put_contents('../.log', "getTotalCommission \n", FILE_APPEND);
         $sql = sprintf(
-            "SELECT SUM(commission_ht) AS total_commission FROM ventes WHERE id_collaborateur = %d AND date LIKE '%s-%%'",
+            "SELECT SUM(commission_ht) AS total_commission_ht, SUM(commission_ttc) AS total_commission_ttc FROM ventes WHERE id_collaborateur = %d AND YEAR(date) = %d",
             $id_collab,
             $annee
         );
 
-        file_put_contents('../.log', $sql, FILE_APPEND);
+        file_put_contents(
+            "../.log",
+            $sql . PHP_EOL,
+            FILE_APPEND
+        );
 
         $req = $this->db->prepare($sql);
         $req->execute();
 
         $result = $req->fetch(PDO::FETCH_ASSOC);
-
-        file_put_contents(
-            '../.log',
-            $result['total_commission'] . "\n",
-            FILE_APPEND
-        );
 
         return $result['total_commission'];
     }
@@ -41,45 +38,40 @@ class CollaborateurManager
     public function get_palier($vente)
     {
 
-        file_put_contents('../.log', "\n\nget_palier \n", FILE_APPEND);
-
         $sql = sprintf(
-            'SELECT paliers.id_palier, paliers.valeur FROM paliers_commission paliers JOIN collaborateurs ON paliers.id_role = collaborateurs.statut WHERE collaborateurs.id_collaborateur = %d AND paliers.limite >= %d LIMIT 1;',
+            'SELECT paliers.id_palier, paliers.valeur FROM paliers_commission paliers JOIN collaborateurs ON paliers.id_role = collaborateurs.id_role WHERE collaborateurs.id_collaborateur = %d AND paliers.limite >= %d LIMIT 1;',
             $vente->getCollaborateur(),
             $this->getTotalCommission($vente->getCollaborateur(), substr($vente->getDate(), 0, 4))
         );
 
-        file_put_contents('../.log', "\n\n" . $sql . " \n\n", FILE_APPEND);
+        file_put_contents(
+            "../.log",
+            $sql . PHP_EOL,
+            FILE_APPEND
+        );
 
         $req = $this->db->prepare($sql);
         $req->execute();
 
-        $palier = [];
+        $palier = $req->fetch(PDO::FETCH_ASSOC);
 
-        foreach ($req->fetchAll(PDO::FETCH_ASSOC) as $palier) {
-            $palier[] = [
-                'id' => $palier['id_palier'],
-                'valeur' => $palier['valeur'],
-            ];
-        }
-
-        file_put_contents(
-            '../.log',
-            $palier[0]['valeur'],
-            FILE_APPEND
-        );
-
-        return $palier[0]['valeur'];
+        return $palier['valeur'];
     }
 
     public function add(Collaborateur $collaborateur)
     {
-        $req = $this->db->prepare('INSERT INTO collaborateurs (civilite, nom, prenom, email, statut) VALUES (:civilite, :nom, :prenom, :email, :statut)');
-        $req->bindValue(':civilite', $collaborateur->getCivilite());
-        $req->bindValue(':nom', $collaborateur->getNom());
-        $req->bindValue(':prenom', $collaborateur->getPrenom());
-        $req->bindValue(':email', $collaborateur->getEmail());
-        $req->bindValue(':statut', $collaborateur->getStatut());
+
+        $sql = sprintf(
+            "INSERT INTO collaborateurs (civilite, nom, prenom, email, id_role) VALUES ('%s', '%s', '%s', '%s', %d)",
+            $collaborateur->getCivilite(),
+            $collaborateur->getNom(),
+            $collaborateur->getPrenom(),
+            $collaborateur->getEmail(),
+            $collaborateur->getId_role()
+        );
+
+        $req = $this->db->prepare($sql);
+
 
         $req->execute();
     }
@@ -118,31 +110,20 @@ class CollaborateurManager
 
         $req->execute();
 
-        while ($donnees = $req->fetch(PDO::FETCH_ASSOC)) {
-            $collaborateurs[] =
-                [
-                    'id_collaborateur' => $donnees['id_collaborateur'],
-                    'civilite' => $donnees['civilite'],
-                    'nom' => $donnees['nom'],
-                    'prenom' => $donnees['prenom'],
-                    'statut' => $donnees['statut'],
-                    'email' => $donnees['email'],
-                    'commission_ttc' => $donnees['commission_ttc'],
-                    'commission_ht' => $donnees['commission_ht'],
-                ];
-        }
+        $collaborateurs = $req->fetchAll(PDO::FETCH_ASSOC);
+
         return json_encode($collaborateurs);
     }
 
     public function update(Collaborateur $collaborateur)
     {
-        $req = $this->db->prepare('UPDATE collaborateurs SET civilite = :civilite, nom = :nom, prenom = :prenom, email = :email, statut = :statut WHERE id = :id');
+        $req = $this->db->prepare('UPDATE collaborateurs SET civilite = :civilite, nom = :nom, prenom = :prenom, email = :email, id_role = :id_role WHERE id = :id');
         $req->bindValue(':id', $collaborateur->getId());
         $req->bindValue(':civilite', $collaborateur->getCivilite());
         $req->bindValue(':nom', $collaborateur->getNom());
         $req->bindValue(':prenom', $collaborateur->getPrenom());
         $req->bindValue(':email', $collaborateur->getEmail());
-        $req->bindValue(':statut', $collaborateur->getStatut());
+        $req->bindValue(':id_role', $collaborateur->getId_role());
         $req->execute();
     }
 }

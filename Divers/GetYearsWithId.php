@@ -14,7 +14,12 @@ if (isset($data['id'])) {
     $db = new PDO($ini['DB_URL'], $ini['DB_USER'], $ini['DB_PASSWORD']);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $req = $db->prepare('SELECT DISTINCT YEAR(ventes.date) AS annee FROM ventes join collaborateurs on ventes.id_collaborateur = collaborateurs.id_collaborateur where ventes.id_collaborateur = ' . $data["id"] . '  and collaborateurs.actif = 1 ORDER BY annee DESC  ');
+    $sql = sprintf(
+        "SELECT DISTINCT YEAR(ventes.date) AS annee FROM ventes JOIN collaborateurs ON ventes.id_collaborateur = collaborateurs.id_collaborateur WHERE ventes.id_collaborateur = %d  AND collaborateurs.actif = 1 AND ventes.actif = 1 ORDER BY annee DESC;",
+        $data['id']
+    );
+
+    $req = $db->prepare($sql);
 
     $years = [];
 

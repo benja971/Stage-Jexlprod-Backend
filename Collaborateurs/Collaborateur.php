@@ -8,7 +8,7 @@ class Collaborateur
     private $nom;
     private $prenom;
     private $email;
-    private $statut;
+    private $id_role;
     private $volume;
 
     public function __construct($donnees)
@@ -107,19 +107,19 @@ class Collaborateur
     }
 
     /**
-     * Get the value of statut
+     * Get the value of id_role
      */
-    public function getStatut()
+    public function getId_role()
     {
-        return $this->statut;
+        return $this->id_role;
     }
 
     /**
-     * Set the value of statut
+     * Set the value of id_role
      */
-    public function setStatut($statut)
+    public function setId_role($id_role)
     {
-        $this->statut = $statut;
+        $this->id_role = $id_role;
     }
 
     /**
@@ -140,6 +140,6 @@ class Collaborateur
 
     public function __toString()
     {
-        return $this->civilite . " " . $this->nom . " " . $this->prenom . " " . $this->email . " " . $this->statut . " " . $this->volume;
+        return $this->civilite . " " . $this->nom . " " . $this->prenom . " " . $this->email . " " . $this->id_role . " " . $this->volume;
     }
 }

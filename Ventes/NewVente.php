@@ -26,7 +26,7 @@ if (isset($data)) {
             "ville" => $data->ville,
             "code_postal" => $data->code_postal,
             "date" => $data->date,
-            "frais_agence" => $data->prix,
+            "frais_agence" => $data->frais_agence,
             "collaborateur" => $data->collaborateur,
         ]
     );

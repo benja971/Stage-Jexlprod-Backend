@@ -11,13 +11,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $stmt = $db->prepare("SELECT * FROM roles");
 $stmt->execute();
 
-$roles = [];
-
-foreach ($stmt->fetchAll() as $row) {
-    $roles[] = [
-        'id' => $row['id_role'],
-        'nom' => $row['nom']
-    ];
-}
+$roles = $stmt->fetchAll();
 
 echo json_encode($roles);

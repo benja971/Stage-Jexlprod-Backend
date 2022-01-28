@@ -12,7 +12,12 @@ class UtilisateurManager
 
     public function getUtilisateur($user)
     {
-        $sql = "select count(*) as success from utilisateurs where email = '" . $user->getEmail() . "' and mot_de_passe = '" . $user->getPassword() . "'\n";
+        $sql = sprintf(
+            "SELECT COUNT(*) as success FROM utilisateurs WHERE email = '%s' AND mot_de_passe = '%s';",
+            $user->getEmail(),
+            $user->getPassword()
+        );
+
         $req = $this->db->prepare($sql);
 
         $req->execute();
