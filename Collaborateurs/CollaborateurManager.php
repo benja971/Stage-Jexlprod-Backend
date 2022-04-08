@@ -21,12 +21,6 @@ class CollaborateurManager
             $annee
         );
 
-        file_put_contents(
-            "../.log",
-            $sql . PHP_EOL,
-            FILE_APPEND
-        );
-
         $req = $this->db->prepare($sql);
         $req->execute();
 

@@ -33,7 +33,6 @@ class VenteManager
 
     public function getList($annee, $id_collab)
     {
-
         $sql = sprintf(
             "SELECT CONCAT(collaborateurs.nom,' ' ,collaborateurs.prenom) AS collab, ventes.* FROM ventes JOIN collaborateurs ON ventes.id_collaborateur = collaborateurs.id_collaborateur WHERE collaborateurs.id_collaborateur = %d AND ventes.actif = 1 AND ventes.date LIKE '%s-%%' ORDER BY ventes.date DESC;",
             $id_collab,
